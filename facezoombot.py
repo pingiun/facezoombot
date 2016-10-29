@@ -42,7 +42,7 @@ class ZoomBot(telepot.Bot):
             if len(faces['faces']) == 0 and chat_type == 'private':
                 self.sendMessage(chat_id, "Couldn't detect a face in your picture.")
             else:
-                bot.sendChatAction(chat_id, 'upload_photo')
+                self.sendChatAction(chat_id, 'upload_photo')
                 face = faces['faces'][0]
                 im = Image.open(file_path)
                 if face['orientation'] == 'frontal':
