@@ -20,7 +20,7 @@ class ZoomBot(telepot.Bot):
             if msg['text'] == '/start' or msg['text'].startswith('/help'):
                 self.sendMessage(chat_id, self.helptext)
             if msg['text'] == '/about':
-                self.sendMessage(chat_id, "This bot is made by Jelle Besseling (@pingiun)\nHosted by @bothosting.")
+                self.sendMessage(chat_id, "This bot is made by Jelle Besseling (@pingiun).")
             elif chat_type == 'private':
                 self.sendMessage(chat_id, self.helptext)
         elif content_type in ['new_chat_participant', 'left_chat_participant', 'new_chat_title', 'new_chat_photo', 'delete_chat_photo', 'group_chat_created', 'supergroup_chat_created', 'migrate_to_chat_id', 'migrate_from_chat_id', 'channel_chat_created']:
