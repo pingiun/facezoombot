@@ -15,7 +15,6 @@ class ZoomBot(telepot.Bot):
 
     def on_chat_message(self, msg):
         print("Got a message")
-
         content_type, chat_type, chat_id = telepot.glance(msg)
         if content_type == 'text':
             if msg['text'] == '/start' or msg['text'].startswith('/help'):
@@ -27,7 +26,7 @@ class ZoomBot(telepot.Bot):
         elif content_type in ['new_chat_participant', 'left_chat_participant', 'new_chat_title', 'new_chat_photo', 'delete_chat_photo', 'group_chat_created', 'supergroup_chat_created', 'migrate_to_chat_id', 'migrate_from_chat_id', 'channel_chat_created']:
             return
         elif content_type == 'photo':
-            self.sendChatAction(chat_id, 'upload_photo')
+            
             file_path = '/tmp/' + msg['photo'][-1]['file_id'] + '.jpg'
             print("Downloading file")
             self.download_file(msg['photo'][-1]['file_id'], file_path)
@@ -43,6 +42,7 @@ class ZoomBot(telepot.Bot):
             if len(faces['faces']) == 0 and chat_type == 'private':
                 self.sendMessage(chat_id, "Couldn't detect a face in your picture.")
             else:
+                bot.sendChatAction(chat_id, 'upload_photo')
                 face = faces['faces'][0]
                 im = Image.open(file_path)
                 if face['orientation'] == 'frontal':
