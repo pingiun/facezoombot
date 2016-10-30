@@ -19,10 +19,13 @@ class ZoomBot(telepot.Bot):
         if content_type == 'text':
             if msg['text'] == '/start' or msg['text'].startswith('/help'):
                 self.sendMessage(chat_id, self.helptext)
+                return
             if msg['text'] == '/about':
                 self.sendMessage(chat_id, "This bot is made by Jelle Besseling (@pingiun).")
+                return
             elif chat_type == 'private':
                 self.sendMessage(chat_id, self.helptext)
+                return
         elif content_type in ['new_chat_participant', 'left_chat_participant', 'new_chat_title', 'new_chat_photo', 'delete_chat_photo', 'group_chat_created', 'supergroup_chat_created', 'migrate_to_chat_id', 'migrate_from_chat_id', 'channel_chat_created']:
             return
         elif content_type == 'photo':
@@ -39,9 +42,10 @@ class ZoomBot(telepot.Bot):
             
             if len(faces['faces']) > 1 and chat_type == 'private':
                 self.sendMessage(chat_id, "There are too many faces in your photo, I only work when one face is visible. Please crop your foto to only show one face.")
+                return
             if len(faces['faces']) == 0 and chat_type == 'private':
                 self.sendMessage(chat_id, "Couldn't detect a face in your picture.")
-            else:
+            elif len(faces['faces']) > 0:
                 self.sendChatAction(chat_id, 'upload_photo')
                 face = faces['faces'][0]
                 im = Image.open(file_path)
